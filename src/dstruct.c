@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//definição do tamanho MAX do vetor estatico
-#define MAX 25
+
+
 
 /*---------------------------------- Functions Lista Encadeada---*/
 void init_Lista(Lista* l){
@@ -189,6 +189,13 @@ void delLista(Lista* l){
     l->tamanho = 0;
     l->inicio = NULL;
     l->fim = NULL;
+}
+
+void delListas(Lista listas[])
+{
+    for (int i = 0; i < MAX; i++) {
+        delLista(&listas[i]);
+    }
 }
 
 void findElem(Lista *l, int Elem)

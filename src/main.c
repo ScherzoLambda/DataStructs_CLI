@@ -13,10 +13,10 @@ int main()
 
     char opt_[5];
     welcomeSaudation();
-
+    menu();
     while (1)
     {
-        menu();
+
         printf("\n<dstruct>:\x1b[34m~\x1b[0m$ ");
         if (scanf("%4s", opt_) != 1)
         {
@@ -66,6 +66,9 @@ int main()
             break;
         case SAIR: // 13
             return 0;
+        case HELP_MENU: // 13
+            menu();
+            break;
         default:
             printf("Opção inválida! Tente novamente.\n");
         }

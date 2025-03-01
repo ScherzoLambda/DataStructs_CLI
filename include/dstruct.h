@@ -1,6 +1,6 @@
 #ifndef DSTRUCT_H_INLUDED
 #define DSTRUCT_H_INLUDED
-#define MAX 25
+#define MAX 20
 /*Nó para armazenazem de dados.*/
 typedef struct Nod {
     int info;
@@ -31,6 +31,7 @@ void insereFim(Lista* lista, int Elem);
 void inserePosicao(Lista* lista, int posicao, int elemento);
 void deletElem(Lista* L, int Elem);
 void delLista(Lista* l);
+void delListas(Lista listas[]);
 void findElem(Lista* l, int Elem);
 
 /*********************************************
@@ -145,6 +146,7 @@ int set_isSubset(set_* set1, set_* set2);
 int set_isEqual(set_* set1, set_* set2);
 int set_size(set_* set);
 void set_cover(int conjunto[], int tamanho_conjunto, int subconjuntos[][5], int quantidade_subconjuntos);
+void showSet(set_* set);
 //void set_cover(set_** sets, int numSets, set_* result);
 
 

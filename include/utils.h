@@ -10,6 +10,7 @@
 /// @brief Enum type to represent the options of the menu.
 /// maps the name of structs to a number.
 typedef enum {
+    UNKNOW_COMMAND = -1,
     LISTA_LIGADA = 0,
     LISTA_DUPLAMENTE_LIGADA,
     PILHA_DINAMICA,
@@ -23,7 +24,8 @@ typedef enum {
     HEAP,
     BINARY_TREE,
     GRAPH,
-    SAIR  
+    SAIR,
+    HELP_MENU  
 } MenuOption;
 
 typedef enum {
@@ -41,7 +43,8 @@ typedef enum {
     OP_INTER,
     OP_DIFF,
     OP_MBSET,
-    OP_COVER
+    OP_COVER,
+    OP_INFO
 } StructsOperation;
 
 StructsOperation getStructOperation(const char *op) {
@@ -59,6 +62,7 @@ StructsOperation getStructOperation(const char *op) {
     if (strcmp(op, "diff") == 0) return OP_DIFF;
     if (strcmp(op, "mbset") == 0) return OP_MBSET;
     if (strcmp(op, "cover") == 0) return OP_COVER;
+    if (strcmp(op, "info") == 0) return OP_INFO;
     return OP_INVALID;
 }
 
@@ -77,7 +81,8 @@ MenuOption getMenuOption(const char *op) {
     if (strcmp(op, "11") == 0) return BINARY_TREE;
     if (strcmp(op, "12") == 0) return GRAPH;
     if (strcmp(op, "exit") == 0) return SAIR;
-    return SAIR;
+    if (strcmp(op, "help") == 0) return HELP_MENU;
+    return UNKNOW_COMMAND;
 }
 
 void welcomeSaudation();
@@ -91,7 +96,7 @@ char structOption[7]; //operations for structures
 int num, num1 = 0;    // indice e valor
 
 void welcomeSaudation(){
-    printf("\n===========Bem vidon ao dataStruct===========");
+    printf("\n\t===========Bem Vindo ao dataStruct===========");
     printf("\nUm programa para interagir e entender o funcionamento de estruturas de dados.");
 }
 
@@ -101,7 +106,7 @@ void menu(){
     printf("\n[4] \t Fila dinamica  | [5] \t Fila de prioridades");
     printf("\n[6] \t Deque          | [7] \t Set");
     printf("\n[8] \t Hash Table     | [9] \t chained hash table");
-    printf("\n[10] \t Heap          | [11] \t Binary Tree");
+    printf("\n[10] \t Heap           | [11] \t Binary Tree");
     printf("\n[12] \t Graph");
     printf("\n'exit' finalizar o programa.\n");
 
@@ -109,7 +114,7 @@ void menu(){
 
 void menuListaOperations(){
     Lista l1;
-    Lista l2;
+    // Lista l2;
     init_Lista(&l1);
     // init_Lista(&l2);
     Lista listas[MAX_STRUCTS];
@@ -124,14 +129,15 @@ void menuListaOperations(){
         listas[i].fim = NULL;    
     }
     printf("Playground Listas\n");
-    printf(" 'new' <n lista> <item>\t adiciona nova lista.\n");
-    printf(" 'add' adiciona item na lista(1).\n");
-    printf(" 'del1' deleta item lista(1).\n");
+    printf(" 'new' <n lista> <item> \t adiciona nova lista.\n");
+    printf(" 'add' <n lista> <item> \t adiciona item.\n");
+    printf(" 'del1' <n lista> <item> \t deleta item lista(1).\n");
     printf(" 'dellist' <n lista> deleta lista de acordo com seu índice.\n");
     printf(" 'find' verifica se uma lista contém o item.\n");
     printf(" 'show' Exibe todos as Listas.\n");
     printf(" 'del' deleta todos as Listas.\n");
     printf(" 'quit' volta menu de estruturas.\n");
+    printf(" 'info' informações sobre esse Playground.\n");
 
     while(1){
         printf("\n<dstruct>:[\x1b[34mListas\x1b[0m]$ ");
@@ -143,13 +149,8 @@ void menuListaOperations(){
         }
         switch (getStructOperation(structOption)) {
             case OP_S:
+            delListas(listas);
                 return;
-            case OP_ASET:
-                Lista newLista;
-                init_Lista(&newLista);
-                listas[listas->tamanho] = newLista;
-                listas->tamanho++;
-                break;
             case OP_ADD:
                 //printf("Digite um numero: ");
                 scanf("%d", &num); //indice
@@ -196,7 +197,11 @@ void menuListaOperations(){
                 scanf("%d", &num); //indice
                 scanf("%d", &num1); // valor
                 findElem(&listas[num], num1);
-
+                break;
+            case OP_INFO:
+                printf("\t Tamanho array de listas %d \n", MAX_STRUCTS);
+                printf("\t Quantidade de listas criadas %d\n", listas->tamanho);
+                // system("clear");
                 break;
             default:
                 printf("Opção inválida! Digite novamente.\n");
