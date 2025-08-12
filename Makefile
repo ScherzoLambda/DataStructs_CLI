@@ -1,34 +1,44 @@
 CC = gcc
 
-# Opções de compilação
-CFLAGS = -Wall -Wextra -std=c11 -Iinclude
+CFLAGS = -Wall -Wextra -std=c11 -Iinclude -MMD
 
 # Nome do executável final
 TARGET = DataStruct
 
-# Arquivos-fonte do projeto 
-SRCS =  src/main.c src/dstruct.c 
+# Diretório para os arquivos objeto
+OBJDIR = obj
 
-# Arquivos objeto que serão gerados
-OBJS = main.o dstruct.o
+# Encontra todos os arquivos .c nos diretórios src e src/menus.
+SRCS := $(wildcard src/*.c src/menus/*.c)
 
+# Automaticamente gera a lista de arquivos objeto (.o) a partir da lista de fontes.
+OBJS := $(patsubst src/%.c,$(OBJDIR)/%.o,$(patsubst src/menus/%.c,$(OBJDIR)/%.o,$(SRCS)))
 
-# Regra padrão (quando você roda "make" sem argumentos)
+# Regra padrão: compila tudo
 all: $(TARGET)
 
-# Gera o executável a partir dos objetos
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
-	rm -f $(OBJS)
+# Cria o diretório de objetos se ele não existir
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
-# compilar .c em .o
-%.o: src/%.c include/*.h
-	$(CC) $(CFLAGS) -c $<
-	
+# Linka os arquivos objeto para criar o executável final
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Inclui os arquivos de dependência gerados pelo -MMD
+-include $(patsubst $(OBJDIR)/%.o, $(OBJDIR)/%.d, $(OBJS))
+
+# Regra genérica para compilar qualquer arquivo .c em um .o,
+# garantindo que o diretório 'obj' seja criado ANTES da compilação.
+$(OBJDIR)/%.o: src/%.c | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Executa o programa
 run: $(TARGET)
 	@echo "Compilação bem-sucedida! Executando o programa..."
 	@./$(TARGET)
 
-
+# Limpa todos os arquivos gerados (executável, objetos e arquivos .d)
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJDIR)/*.o $(OBJDIR)/*.d $(TARGET)
+	rmdir $(OBJDIR) 2>/dev/null || true

@@ -3,3 +3,5 @@
 *.out
 *.bin
 *.o
+*.idea/
+*.vscode/

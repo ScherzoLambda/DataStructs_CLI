@@ -1,6 +1,7 @@
 #include <stdio.h>
-
-#include <sdstruct.h>
+#include <stdlib.h>
+#include <string.h>
+#include "specialstruct.h"
 
 /* ### Fun��es Tabela Hash ### */
 void initTH(tHash *t){
