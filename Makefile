@@ -32,7 +32,9 @@ $(TARGET): $(OBJS)
 # garantindo que o diretório 'obj' seja criado ANTES da compilação.
 $(OBJDIR)/%.o: src/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
-
+# Regra para compilar arquivos .c de 'src/menus'
+$(OBJDIR)/%.o: src/menus/%.c | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 # Executa o programa
 run: $(TARGET)
 	@echo "Compilação bem-sucedida! Executando o programa..."

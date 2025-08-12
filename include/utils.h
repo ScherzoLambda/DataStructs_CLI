@@ -52,10 +52,12 @@ MenuOption getMenuOption(const char *op);
 
 void welcomeSaudation();
 void menu();
+void mainMenu();
 void menuListaOperations();
 void menuPilhaOperations();
 void menuDequeOperations();
 void menuSetOperations();
+void menuFilaOperations();
 
 extern char structOption[7]; //operations for structures
 //int num, num1 = 0;    // indice e valor

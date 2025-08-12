@@ -10,7 +10,7 @@ void initFila(Fila* f){
 
 void filaAdd(Fila* f, int Elem){
     if (f->tamanho >= MAX) {
-        printf("Erro: Lista cheia\n");
+        printf("Erro: Fila cheia\n");
         return;
     }
 
@@ -23,7 +23,7 @@ void filaAdd(Fila* f, int Elem){
     novoNo->info = Elem;
     if (f->inicio == NULL) {
     	novoNo->next = NULL;
-        // Se a fila estiver vazia, o novo n� ser� o primeiro e o �ltimo
+        
         f->inicio = novoNo;
         f->fim = novoNo;
         //lista->inicio->next = NULL;
